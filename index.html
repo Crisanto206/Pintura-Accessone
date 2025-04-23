@@ -1,121 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Presupuesto de Pintura</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #2D2A6E;
-            color: #FFFFFF;
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            background-color: #432F91;
-            padding: 20px;
-            text-align: center;
-        }
-
-        h1 {
-            color: #FECF01;
-            text-align: center;
-        }
-
-        form {
-            background-color: #3E3A92;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 400px;
-            margin: 20px auto;
-        }
-
-        label, input, button {
-            display: block;
-            width: 100%;
-            margin-bottom: 15px;
-        }
-
-        input, button {
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-        }
-
-        input {
-            background-color: #FFFFFF;
-            color: #000000;
-        }
-
-        button {
-            background-color: #FECF01;
-            color: #432F91;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #FFD834;
-        }
-
-        #results {
-            background-color: #3E3A92;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 400px;
-            margin: 20px auto;
-            text-align: center;
-        }
-    </style>
-    <script>
-        function calculateBuckets() {
-            const paintCost = 3100.35;
-            const thinnerCost = 877.11;
-            const thinnerRatio = 5;
-
-            const budget = parseFloat(document.getElementById("budget").value);
-
-            if (isNaN(budget) || budget <= 0) {
-                alert("Por favor, ingresa un presupuesto válido.");
-                return;
-            }
-
-            let paintBuckets = Math.floor(budget / paintCost);
-            let thinnerBuckets = Math.ceil(paintBuckets / thinnerRatio);
-            let totalCost = (paintBuckets * paintCost) + (thinnerBuckets * thinnerCost);
-
-            while (totalCost > budget && paintBuckets > 0) {
-                paintBuckets--;
-                thinnerBuckets = Math.ceil(paintBuckets / thinnerRatio);
-                totalCost = (paintBuckets * paintCost) + (thinnerBuckets * thinnerCost);
-            }
-
-            document.getElementById("results").innerHTML = `
-                <p><strong>Con un presupuesto de $${budget.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}:</strong></p>
-                <ul>
-                    <li>Cubetas de pintura: ${paintBuckets}</li>
-                    <li>Cubetas de thinner: ${thinnerBuckets}</li>
-                    <li>Costo total estimado: $${totalCost.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</li>
-                </ul>
-            `;
-        }
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checklist de Operaciones</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #2D2A6E;
+      color: #FFFFFF;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #432F91;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      color: #FECF01;
+    }
+    .checklist-section {
+      background-color: #3E3A92;
+      border-radius: 10px;
+      margin: 20px auto;
+      padding: 20px;
+      max-width: 600px;
+    }
+    h2 {
+      color: #FECF01;
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    input[type="checkbox"] {
+      margin-right: 10px;
+    }
+    .progress {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #FFD834;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <img src="logo.png" alt="Logo AccessOne" style="max-width: 200px; display: block; margin: 0 auto;">
-    </header>
-    <h1>Calculadora de Presupuesto de Pintura</h1>
-    <form onsubmit="event.preventDefault(); calculateBuckets();">
-        <label for="budget">Presupuesto (MXN): </label>
-        <input type="number" id="budget" min="0" step="0.01" required>
-        <button type="submit">Calcular</button>
-    </form>
-    <div id="results"></div>
+  <header>
+    <img src="logo.png" alt="Logo AccessOne" style="max-width: 200px; display: block; margin: 0 auto;">
+  </header>
+  <h1 style="text-align:center">Checklist de Actividades Operativas</h1>
+
+  <div class="checklist-section" id="diarias">
+    <h2>Actividades Diarias</h2>
+    <label><input type="checkbox" onchange="updateProgress('diarias')"> Reportar llegada a proyecto y ubicación (2 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('diarias')"> Supervisión de estacionamiento (15 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('diarias')"> Revisión de casetas (15 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('diarias')"> Revisión de equipos de operación (15 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('diarias')"> Supervisión de personal (10 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('diarias')"> Hoja de corte del día anterior (15-20 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('diarias')"> Conteo y cuadre de dinero (30-40 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('diarias')"> Depósito de ingresos (30-60 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('diarias')"> Revisión de correos y pendientes (15 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('diarias')"> Facturación, foto y envío al Drive (40 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('diarias')"> Supervisión de guardias (15 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('diarias')"> Corte matutino (20 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('diarias')"> Cobertura de comidas (40 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('diarias')"> Arqueos sorpresa (20 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('diarias')"> Cobertura para sanitarios (20 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('diarias')"> Llenado de bitácora (15 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('diarias')"> Sanitización y limpieza de equipos (15 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('diarias')"> Limpieza de oficina (10 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('diarias')"> Check list de sanitización (15 min)</label>
+    <div class="progress">Cumplimiento: 0%</div>
+  </div>
+
+  <div class="checklist-section" id="semanales">
+    <h2>Actividades Semanales</h2>
+    <label><input type="checkbox" onchange="updateProgress('semanales')"> Captura y envío de caja chica (40 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('semanales')"> Envío de fotos de avance del proyecto</label>
+    <label><input type="checkbox" onchange="updateProgress('semanales')"> Reporte de tickets de mesa de ayuda (30 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('semanales')"> Programación de horarios (30 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('semanales')"> Conteo y envío de boletos (40 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('semanales')"> Compra de insumos operativos (60 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('semanales')"> Junta semanal con personal (30 min)</label>
+    <label><input type="checkbox" onchange="updateProgress('semanales')"> Coordinación de mantenimiento (30 min)</label>
+    <div class="progress">Cumplimiento: 0%</div>
+  </div>
+
+  <div class="checklist-section" id="mensuales">
+    <h2>Actividades Mensuales</h2>
+    <label><input type="checkbox" onchange="updateProgress('mensuales')"> Auditorías WALMART</label>
+    <label><input type="checkbox" onchange="updateProgress('mensuales')"> Podado y calado de árboles</label>
+    <label><input type="checkbox" onchange="updateProgress('mensuales')"> Retoques de pintura</label>
+    <label><input type="checkbox" onchange="updateProgress('mensuales')"> Lavado de conos y trafitambos</label>
+    <label><input type="checkbox" onchange="updateProgress('mensuales')"> Envío de documentación mensual</label>
+    <label><input type="checkbox" onchange="updateProgress('mensuales')"> Programación de mantenimiento mensual</label>
+    <label><input type="checkbox" onchange="updateProgress('mensuales')"> Reporte mensual a WALMART</label>
+    <div class="progress">Cumplimiento: 0%</div>
+  </div>
+
+  <div class="checklist-section" id="semestrales">
+    <h2>Actividades Semestrales</h2>
+    <label><input type="checkbox" onchange="updateProgress('semestrales')"> Verificación ante PROFECO - Enero</label>
+    <label><input type="checkbox" onchange="updateProgress('semestrales')"> Verificación ante PROFECO - Agosto</label>
+    <div class="progress">Cumplimiento: 0%</div>
+  </div>
+
+  <div class="checklist-section" id="anuales">
+    <h2>Actividades Anuales</h2>
+    <label><input type="checkbox" onchange="updateProgress('anuales')"> Gestión de trámites ante dependencias (licencia, uso de suelo, Profeco, PC)</label>
+    <label><input type="checkbox" onchange="updateProgress('anuales')"> Revisión de caducidad de mantenimiento de extintores</label>
+    <label><input type="checkbox" onchange="updateProgress('anuales')"> Retoque y revisión de botes areneros</label>
+    <label><input type="checkbox" onchange="updateProgress('anuales')"> Revisión y actualización de tótem de información (viniles)</label>
+    <label><input type="checkbox" onchange="updateProgress('anuales')"> Lavado de gabinetes de extintores y retoque</label>
+    <label><input type="checkbox" onchange="updateProgress('anuales')"> Solicitud de uniformes del personal (según necesidad)</label>
+    <div class="progress">Cumplimiento: 0%</div>
+  </div>
+
+  <script>
+    function updateProgress(sectionId) {
+      const section = document.getElementById(sectionId);
+      const checkboxes = section.querySelectorAll('input[type="checkbox"]');
+      const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+      const total = checkboxes.length;
+      const percentage = ((checked / total) * 100).toFixed(0);
+      section.querySelector('.progress').textContent = `Cumplimiento: ${percentage}%`;
+    }
+    window.onload = function () {
+      ['diarias', 'semanales', 'mensuales', 'semestrales', 'anuales'].forEach(id => {
+        if (document.getElementById(id)) updateProgress(id);
+      });
+    }
+  </script>
 </body>
 </html>
-
-
-
